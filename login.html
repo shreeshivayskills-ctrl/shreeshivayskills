@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Shree Shivay Skills</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body { 
+            font-family: Arial, sans-serif; line-height: 1.6; color: #333; 
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('background.jpg') no-repeat center center fixed;
+            background-size: cover;
+        }
+        
+        .login-overlay { min-height: 100vh; display: flex; flex-direction: column; }
+
+        /* --- HEADER --- */
+        header {
+            background: linear-gradient(135deg, #FF6B35, #F7931E);
+            color: white; padding: 0.5rem 2rem; box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+        .header-content { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+        .logo { display: flex; align-items: center; gap: 12px; font-size: 1.3rem; font-weight: bold; text-decoration: none; color: white; }
+        .logo img { height: 45px; width: 45px; border-radius: 50%; border: 2px solid white; background: white; }
+
+        /* --- LOGIN CARD --- */
+        .login-container { flex: 1; display: flex; align-items: center; justify-content: center; padding: 20px; }
+        .login-card { 
+            background: rgba(255, 255, 255, 0.95); 
+            padding: 2.5rem; border-radius: 20px; 
+            width: 100%; max-width: 400px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5); 
+            text-align: center;
+        }
+        .login-card h2 { color: #e65100; margin-bottom: 1.5rem; font-size: 1.8rem; }
+        
+        .form-group { margin-bottom: 1.5rem; text-align: left; }
+        .form-group label { display: block; margin-bottom: 8px; font-weight: bold; color: #444; }
+        .form-group input { 
+            width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 10px; font-size: 1rem; 
+        }
+        .form-group input:focus { border-color: #FF6B35; outline: none; }
+        
+        .btn-login { 
+            width: 100%; padding: 14px; 
+            background: linear-gradient(to right, #FF6B35, #F7931E); 
+            color: white; border: none; border-radius: 10px; 
+            font-size: 1.2rem; font-weight: bold; cursor: pointer; transition: 0.3s;
+        }
+        .btn-login:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(230,81,0,0.3); }
+        
+        .links { margin-top: 1.5rem; font-size: 0.9rem; }
+        .links a { color: #e65100; text-decoration: none; font-weight: bold; }
+
+        footer { background: rgba(230, 81, 0, 0.95); color: white; padding: 1rem; text-align: center; }
+    </style>
+</head>
+<body>
+<div class="login-overlay">
+    <header>
+        <div class="header-content">
+            <a href="index.html" class="logo"><img src="omsss.jpeg"> <span>Shree Shivay Skills</span></a>
+        </div>
+    </header>
+
+    <div class="login-container">
+        <div class="login-card">
+            <h2>Student Login</h2>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label>Email ID</label>
+                    <input type="email" id="email" placeholder="Enter your registered email" required>
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="password" placeholder="Enter password" required>
+                </div>
+                <button type="submit" class="btn-login" id="loginBtn">Login Now</button>
+            </form>
+            <div class="links">
+                <p>नया खाता खोलें? <a href="apply.html">Apply Now</a></p>
+                <p style="margin-top: 5px;"><a href="index.html">← Back to Home</a></p>
+            </div>
+        </div>
+    </div>
+
+    <footer><p>© 2026 Shree Shivay Skills</p></footer>
+</div>
+
+<script>
+    const loginForm = document.getElementById('loginForm');
+    
+    loginForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+        const btn = document.getElementById('loginBtn');
+
+        btn.innerText = "Verifying...";
+        btn.disabled = true;
+
+        // यहाँ हम छात्र का ईमेल और पासवर्ड ब्राउज़र की लोकल मेमोरी में टेम्परेरी सेव कर रहे हैं
+        // ताकि dashboard.html उसे इस्तेमाल कर सके
+        localStorage.setItem('studentEmail', email);
+        localStorage.setItem('studentPass', password);
+
+        // अभी के लिए हम सीधे डैशबोर्ड पर भेज रहे हैं
+        // असली वेरिफिकेशन हम dashboard.html में करेंगे
+        setTimeout(() => {
+            window.location.href = "dashboard.html";
+        }, 1000);
+    });
+</script>
+</body>
+</html>

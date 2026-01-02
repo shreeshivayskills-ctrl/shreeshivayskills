@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - Shree Shivay Skills</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; background-color: #f9f9f9; }
+        
+        /* --- HEADER (Matched with index.html) --- */
+        header {
+            background: linear-gradient(135deg, #FF6B35, #F7931E);
+            color: white; padding: 0.5rem 2rem; position: sticky; top: 0; z-index: 100;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .header-content { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+        .logo { display: flex; align-items: center; gap: 12px; font-size: 1.5rem; font-weight: bold; text-decoration: none; color: white; }
+        .logo img { height: 55px; width: 55px; border-radius: 50%; border: 2px solid white; background: white; }
+        
+        .nav-menu { display: flex; gap: 1rem; list-style: none; }
+        .nav-menu a { color: white; text-decoration: none; padding: 0.5rem 1rem; border-radius: 5px; font-weight: 500; transition: 0.3s; }
+        .nav-menu a:hover, .nav-menu a.active { background: rgba(255,255,255,0.3); border-bottom: 2px solid white; }
+
+        /* --- MOBILE MENU ICON (Three Lines) --- */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+        }
+        .menu-toggle div {
+            width: 25px;
+            height: 3px;
+            background-color: white;
+            border-radius: 2px;
+            transition: 0.3s;
+        }
+
+        /* --- ABOUT CONTENT --- */
+        .hero-small {
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('background.jpg');
+            background-size: cover; background-position: center;
+            color: white; text-align: center; padding: 4rem 2rem;
+        }
+        .container { max-width: 1000px; margin: 3rem auto; padding: 0 2rem; }
+        .about-card {
+            background: white; padding: 3rem; border-radius: 15px;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.05); border-left: 8px solid #FF6B35;
+        }
+        .shlok-text {
+            font-size: 1.6rem; color: #FF6B35; font-weight: bold;
+            text-align: center; margin: 2rem 0; line-height: 1.8;
+            background: #fff8f5; padding: 20px; border-radius: 10px;
+        }
+        .highlight { color: #e65100; font-weight: bold; }
+        h2, h3 { color: #FF6B35; margin-bottom: 1rem; }
+        p { margin-bottom: 1.5rem; text-align: justify; }
+        ul { margin-bottom: 1.5rem; padding-left: 20px; }
+        li { margin-bottom: 10px; }
+
+        /* --- FOOTER (Matched with Header) --- */
+        footer { 
+            background: linear-gradient(135deg, #FF6B35, #F7931E); 
+            color: white; padding: 2rem; text-align: center; margin-top: 4rem; 
+        }
+
+        /* --- RESPONSIVE SETTINGS --- */
+        @media (max-width: 768px) {
+            .menu-toggle { display: flex; } /* मोबाइल पर थ्री-लाइन दिखेगी */
+
+            .nav-menu {
+                display: none; /* शुरू में छुपा रहेगा */
+                flex-direction: column;
+                position: absolute;
+                top: 65px;
+                left: 0;
+                width: 100%;
+                background: #F7931E;
+                padding: 20px;
+                gap: 10px;
+                box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+            }
+
+            .nav-menu.show {
+                display: flex; /* क्लिक करने पर दिखेगा */
+            }
+
+            .nav-menu a {
+                display: block;
+                width: 100%;
+                text-align: center;
+                padding: 10px;
+            }
+
+            .about-card { padding: 1.5rem; }
+            .shlok-text { font-size: 1.2rem; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <a href="index.html" class="logo"><img src="omsss.jpeg"> <span>Shree Shivay Skills</span></a>
+            
+            <div class="menu-toggle" id="mobile-menu" onclick="toggleMenu()">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+
+            <nav>
+                <ul class="nav-menu" id="navMenu">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html" class="active">About Us</a></li>
+                    <li><a href="courses.html">Courses</a></li>
+                    <li><a href="apply.html">Apply</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero-small">
+        <h1>📖 हमारे बारे में (About Us)</h1>
+    </section>
+
+    <div class="container">
+        <div class="about-card">
+            <h2>श्री शिवाय स्किल्स: संस्कार और स्किल का समन्वय</h2>
+            <p>हमारे संस्थान का आधार यह अमर श्लोक है:</p>
+            
+            <div class="shlok-text">
+                विद्या ददाति विनयं विनयाद्याति पात्रताम् ।<br>
+                पात्रत्वाद्धनमाप्नोति धनाद्धर्मं ततः सुखम् ॥
+            </div>
+
+            <h3>श्लोक का विस्तार से अर्थ:</h3>
+            <p>इस श्लोक में जीवन की सफलता का मार्ग बताया गया है। सच्ची <span class="highlight">विद्या</span> सबसे पहले मनुष्य के भीतर <span class="highlight">विनय (नम्रता)</span> पैदा करती है। जब व्यक्ति विनम्र होता है, तो वह सीखने के लिए तैयार होता है, जिससे उसके भीतर <span class="highlight">पात्रता (योग्यता/Skills)</span> आती है। जब व्यक्ति योग्य और कुशल बन जाता है, तो उसे <span class="highlight">धन (सफलता और समृद्धि)</span> प्राप्त होती है। उस धन का उपयोग जब वह <span class="highlight">धर्म (सत्कर्म और समाज सेवा)</span> के लिए करता है, तब अंततः उसे सच्चे <span class="highlight">सुख और संतोष</span> की प्राप्ति होती है।</p>
+
+            <hr style="margin: 2rem 0; opacity: 0.2;">
+
+            <h3>विज़न और ध्येय (Vision & Mission):</h3>
+            <p>"श्री शिवाय स्किल्स" केवल एक Open विश्वविद्यालय नहीं, बल्कि एक मिशन है। हमारा ध्येय शिक्षा (Education) को केवल डिग्री तक सीमित न रखकर उसे व्यावहारिक <span class="highlight">कौशल (Skills)</span> से जोड़ना है। हम एक ऐसे समाज का निर्माण कर रहे हैं जहाँ एक हाथ में हमारी प्राचीन संस्कृत की विरासत हो, तो दूसरे हाथ में आधुनिक IT और तकनीकी विशेषज्ञता हो।</p>
+
+            <h3>हमारी विशेषताएँ:</h3>
+            <ul>
+                <li><strong>प्राचीन ज्ञान:</strong> संस्कृत व्याकरण, गीता और षड्-वेदांग के माध्यम से जड़ों से जुड़ाव।</li>
+                <li><strong>आधुनिक कौशल:</strong> Excel, Power BI और डेटा एनालिसिस में विशेषज्ञता।</li>
+                <li><strong>समग्र कल्याण:</strong> आयुर्वेद और प्राकृतिक चिकित्सा द्वारा स्वस्थ जीवन का कौशल।</li>
+            </ul>
+
+            <h3>हमारा लक्ष्य:</h3>
+            <p>हमारा लक्ष्य हर उस जिज्ञासु को सशक्त बनाना है जो स्वयं को अपग्रेड करना चाहता है। हम सीखने की उम्र की सीमा को खत्म कर परंपरा और प्रगति को साथ लाने के लिए समर्पित हैं।</p>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2026 Shree Shivay Skills - All Rights Reserved</p>
+    </footer>
+
+    <script>
+        // मोबाइल मेनू खोलने और बंद करने का फंक्शन
+        function toggleMenu() {
+            var menu = document.getElementById("navMenu");
+            menu.classList.toggle("show");
+        }
+    </script>
+</body>
+</html>

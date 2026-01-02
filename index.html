@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shree Shivay Skills - Home</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f9f9f9;
+        }
+        
+        /* --- HEADER --- */
+        header {
+            /* हेडर का ग्रेडिएंट रंग */
+            background: linear-gradient(135deg, #FF6B35, #F7931E);
+            color: white;
+            padding: 0.5rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-decoration: none;
+            color: white;
+        }
+
+        .logo img {
+            height: 55px;
+            width: 55px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 2px solid white;
+            background: white;
+        }
+        
+        .nav-menu {
+            display: flex;
+            gap: 1rem;
+            list-style: none;
+        }
+        
+        .nav-menu a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: 0.3s;
+            font-weight: 500;
+        }
+        
+        .nav-menu a:hover, .nav-menu a.active-link {
+            background: rgba(255,255,255,0.3);
+            border-bottom: 2px solid white;
+        }
+
+        .login-btn {
+            background: white;
+            color: #FF6B35 !important;
+            border-radius: 20px !important;
+            font-weight: bold !important;
+        }
+
+        /* --- MOBILE MENU ICON --- */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+        }
+
+        .menu-toggle div {
+            width: 25px;
+            height: 3px;
+            background-color: white;
+            border-radius: 2px;
+            transition: 0.3s;
+        }
+        
+        /* --- HERO SECTION --- */
+        .hero {
+            background: url('background.jpg') no-repeat center center/cover;
+            color: white;
+            text-align: center;
+            padding: 6rem 2rem;
+            position: relative;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+        }
+
+        .hero * { position: relative; z-index: 2; }
+        
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.7);
+        }
+        
+        .hero p {
+            font-size: 1.4rem;
+            margin-bottom: 2rem;
+            color: #fff0d1;
+        }
+        
+        .btn {
+            padding: 1rem 2.5rem;
+            background: #FF6B35;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            background: #e65100;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 3rem auto;
+            padding: 0 2rem;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 2.2rem;
+            color: #FF6B35;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid #FF6B35;
+            display: inline-block;
+            padding-bottom: 10px;
+        }
+        
+        .course-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .course-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: 0.3s;
+            border-top: 5px solid #FF6B35;
+            text-align: center;
+        }
+        
+        .course-icon { font-size: 3rem; margin-bottom: 1rem; }
+        .course-card h3 { color: #FF6B35; margin-bottom: 0.5rem; }
+
+        /* --- FOOTER (Matched with Header) --- */
+        footer {
+            /* अब फुटर का रंग भी हेडर के जैसा ग्रेडिएंट है */
+            background: linear-gradient(135deg, #FF6B35, #F7931E);
+            color: white;
+            padding: 3rem 1rem;
+            text-align: center;
+            margin-top: 4rem;
+            border-top: 2px solid rgba(255,255,255,0.2);
+        }
+        
+        /* --- RESPONSIVE SETTINGS --- */
+        @media (max-width: 768px) {
+            .menu-toggle { display: flex; }
+            .nav-menu {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 65px;
+                left: 0;
+                width: 100%;
+                background: #F7931E;
+                padding: 20px;
+                gap: 10px;
+                box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+            }
+            .nav-menu.show { display: flex; }
+            .nav-menu a { display: block; width: 100%; text-align: center; padding: 10px; }
+            .hero h1 { font-size: 2rem; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <a href="index.html" class="logo">
+                <img src="omsss.jpeg" alt="Logo"> 
+                <span>Shree Shivay Skills</span>
+            </a>
+
+            <div class="menu-toggle" id="mobile-menu" onclick="toggleMenu()">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+
+            <nav>
+                <ul class="nav-menu" id="navMenu">
+                    <li><a href="index.html" class="active-link">Home</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="courses.html">Courses</a></li>
+                    <li><a href="apply.html">Apply</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="login.html" class="login-btn">Login</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="hero">
+        <h1>🕉️ Shree Shivay Skills</h1>
+        <p>A Digital Platform for IT, Health & Sanskrit Education</p>
+        <a href="apply.html" class="btn">Apply Now</a>
+    </div>
+
+    <div class="container">
+        <div style="text-align: center;"><h2 class="section-title">Our Featured Courses</h2></div>
+        
+        <div class="course-grid">
+            <div class="course-card">
+                <div class="course-icon">💻</div>
+                <h3>IT & Technology</h3>
+                <p>Excel, Power BI, Data Analysis</p>
+                <br><a href="courses.html" class="btn" style="padding: 0.6rem 1.5rem;">View Details</a>
+            </div>
+            <div class="course-card">
+                <div class="course-icon">🧘</div>
+                <h3>Health & Yoga</h3>
+                <p>Naturopathy, Ayurveda, Ashtang Yoga</p>
+                <br><a href="courses.html" class="btn" style="padding: 0.6rem 1.5rem;">View Details</a>
+            </div>
+            <div class="course-card">
+                <div class="course-icon">📖</div>
+                <h3>Sanskrit Wisdom</h3>
+                <p>Grammar, Gita & Vedanga</p>
+                <br><a href="courses.html" class="btn" style="padding: 0.6rem 1.5rem;">View Details</a>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <h3 style="margin-bottom: 10px;">🕉️ Shree Shivay Skills</h3>
+        <p style="font-size: 0.9rem; opacity: 0.9;">Digital Platform for IT, Health & Sanskrit Education</p>
+        <p style="margin-top: 1.5rem; font-size: 0.8rem; opacity: 0.7;">© 2026 All Rights Reserved</p>
+    </footer>
+
+    <script>
+        function toggleMenu() {
+            var menu = document.getElementById("navMenu");
+            menu.classList.toggle("show");
+        }
+    </script>
+</body>
+</html>
