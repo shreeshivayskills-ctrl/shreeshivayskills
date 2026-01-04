@@ -3,32 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SSS Smart Dashboard - Final Fix</title>
+    <title>SSS Smart Dashboard - Final Version</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         :root { --primary: #e65100; --accent: #FF6B35; }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Segoe UI', sans-serif; height: 100vh; overflow: hidden; background: #000 url('background.jpg') center/cover fixed; }
-        .wrapper { display: flex; height: calc(100vh - 110px); }
-        .top-nav { height: 60px; background: rgba(255,255,255,0.95); display: flex; justify-content: space-between; align-items: center; padding: 0 25px; border-bottom: 3px solid var(--accent); }
-        .main-viewer { flex: 1; padding: 15px; display: flex; flex-direction: column; }
+        
+        .top-nav { height: 60px; background: rgba(255,255,255,0.95); display: flex; justify-content: space-between; align-items: center; padding: 0 20px; border-bottom: 3px solid var(--accent); }
+        .wrapper { display: flex; height: calc(100vh - 110px); position: relative; }
+
+        /* MAIN VIEWER */
+        .main-viewer { flex: 1; padding: 10px; display: flex; flex-direction: column; width: 100%; }
         .content-card { background: white; flex: 1; border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-        .viewer-header { padding: 12px 20px; border-bottom: 1px solid #eee; background: #fafafa; font-weight: bold; color: var(--primary); display: flex; justify-content: space-between; }
+        .viewer-header { padding: 10px 15px; border-bottom: 1px solid #eee; background: #fafafa; font-weight: bold; color: var(--primary); display: flex; justify-content: space-between; font-size: 0.9rem; }
         #displayFrame { width: 100%; height: 100%; border: none; background: #fff; }
-        #textViewer { padding: 30px; overflow-y: auto; height: 100%; display: none; background: #fff; font-size: 1.1rem; line-height: 1.8; }
-        .right-sidebar { width: 210px; background: rgba(255,255,255,0.92); padding: 15px; overflow-y: auto; }
+        #textViewer { padding: 20px; overflow-y: auto; height: 100%; display: none; background: #fff; line-height: 1.6; }
+
+        /* RIGHT SIDEBAR (Desktop) */
+        .right-sidebar { width: 210px; background: rgba(255,255,255,0.95); padding: 15px; overflow-y: auto; transition: 0.3s; border-left: 1px solid #ddd; }
         .info-panel { font-size: 0.8rem; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 1px solid #ccc; }
-        .step-btn { width: 100%; padding: 10px; margin-bottom: 6px; border: 1px solid #eee; border-radius: 6px; background: #fff; text-align: left; cursor: pointer; display: flex; align-items: center; gap: 8px; font-size: 0.8rem; font-weight: 500; transition: 0.2s; }
+        .step-btn { width: 100%; padding: 10px; margin-bottom: 6px; border: 1px solid #eee; border-radius: 8px; background: #fff; text-align: left; cursor: pointer; display: flex; align-items: center; gap: 8px; font-size: 0.8rem; font-weight: 500; }
         .step-btn.active { background: var(--accent); color: white; border-color: var(--accent); }
-        .footer-progress { height: 50px; background: #fff; padding: 0 25px; display: flex; align-items: center; gap: 15px; position: fixed; bottom: 0; width: 100%; border-top: 1px solid #ddd; }
-        .p-bar-bg { flex: 1; height: 12px; background: #eee; border-radius: 10px; overflow: hidden; }
-        .p-bar-fill { height: 100%; background: linear-gradient(to right, #4CAF50, #81C784); width: 0%; transition: 1s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-        #loader { position: fixed; inset: 0; background: #fff; display: flex; justify-content: center; align-items: center; z-index: 2000; }
+
+        /* MOBILE MENU TOGGLE BUTTON */
+        .menu-toggle { display: none; position: fixed; right: 20px; bottom: 80px; background: var(--primary); color: white; width: 50px; height: 50px; border-radius: 50%; justify-content: center; align-items: center; font-size: 1.2rem; box-shadow: 0 5px 15px rgba(0,0,0,0.4); z-index: 1001; border: none; cursor: pointer; }
+
+        /* FOOTER PROGRESS */
+        .footer-progress { height: 50px; background: #fff; padding: 0 20px; display: flex; align-items: center; gap: 15px; position: fixed; bottom: 0; width: 100%; border-top: 1px solid #ddd; z-index: 1000; }
+        .p-bar-bg { flex: 1; height: 10px; background: #eee; border-radius: 10px; overflow: hidden; }
+        .p-bar-fill { height: 100%; background: linear-gradient(to right, #4CAF50, #81C784); width: 0%; transition: 1s; }
+
+        /* RESPONSIVE LOGIC */
+        @media (max-width: 768px) {
+            .right-sidebar { position: absolute; right: -210px; top: 0; height: 100%; z-index: 1000; width: 210px; }
+            .right-sidebar.open { right: 0; }
+            .menu-toggle { display: flex; }
+        }
     </style>
 </head>
 <body>
 
-<div id="loader"><h2>प्रभु स्मरण के साथ पोर्टल लोड हो रहा है...</h2></div>
+<div id="loader" style="position:fixed; inset:0; background:#fff; display:flex; justify-content:center; align-items:center; z-index:2000;"><h2>प्रभु स्मरण के साथ पोर्टल लोड हो रहा है...</h2></div>
 
 <nav class="top-nav">
     <div style="display:flex; align-items:center; gap:10px;">
@@ -45,16 +61,18 @@
                 <span id="contentTitle">अध्ययन कक्ष</span>
                 <span id="chapNo" style="font-size: 0.8rem; color: #666;">शुरुआत करें</span>
             </div>
-            <iframe id="displayFrame" src="about:blank" allow="autoplay; fullscreen; encrypted-media"></iframe>
+            <iframe id="displayFrame" src="about:blank" allow="autoplay; fullscreen; encrypted-media; picture-in-picture"></iframe>
             <div id="textViewer"></div>
         </div>
     </main>
 
-    <aside class="right-sidebar">
+    <button class="menu-toggle" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
+
+    <aside class="right-sidebar" id="sidebar">
         <div class="info-panel" id="sideInfo"></div>
-        <button class="step-btn" data-step="1" onclick="loadContent('syllabus', this)"><i class="fas fa-folder-open"></i> 📂 Syllabus Content</button>
-        <div style="margin:15px 0 8px 0; font-size:0.7rem; font-weight:bold; color:#666; text-transform:uppercase;">अध्ययन सामग्री</div>
-        <button class="step-btn" data-step="2" onclick="loadContent('video', this)"><i class="fas fa-play-circle"></i> Video Talk</button>
+        <button class="step-btn" data-step="1" onclick="loadContent('syllabus', this)"><i class="fas fa-folder-open"></i> Syllabus</button>
+        <div style="margin:10px 0 5px 0; font-size:0.7rem; font-weight:bold; color:#666; text-transform:uppercase;">अध्ययन सामग्री</div>
+        <button class="step-btn" id="btn-video" data-step="2" onclick="loadContent('video', this)"><i class="fas fa-play-circle"></i> Video Talk</button>
         <button class="step-btn" data-step="3" onclick="loadContent('pdf', this)"><i class="fas fa-file-pdf"></i> PDF Book</button>
         <button class="step-btn" data-step="4" onclick="loadContent('audio', this)"><i class="fas fa-headphones"></i> Podcast</button>
         <button class="step-btn" data-step="5" onclick="loadContent('slides', this)"><i class="fas fa-chalkboard-teacher"></i> PPT Slides</button>
@@ -90,60 +108,61 @@
                 document.getElementById('sideInfo').innerHTML = `<b>ID:</b> ${window.d.courseID}<br><b>कोर्स:</b> ${window.d.courseName}`;
                 document.getElementById('chapNo').innerText = "अध्याय: " + window.d.lessonNo;
             } else { logout(); }
-        }).catch(err => { alert("कनेक्शन में समस्या!"); logout(); });
+        }).catch(err => { alert("कनेक्शन एरर!"); logout(); });
     };
+
+    function toggleSidebar() { document.getElementById('sidebar').classList.toggle('open'); }
 
     function updateProgress(stepId) {
         completedSteps.add(stepId);
-        const percentage = Math.round((completedSteps.size / 10) * 100);
-        document.getElementById('progFill').style.width = percentage + "%";
-        document.getElementById('progText').innerText = percentage + "%";
+        let p = Math.round((completedSteps.size / 10) * 100);
+        document.getElementById('progFill').style.width = p + "%";
+        document.getElementById('progText').innerText = p + "%";
     }
 
     function fixDriveLink(url) {
-        if (!url || url === "") return "about:blank";
+        if (!url || url.trim() === "") return "about:blank";
         if (url.includes("drive.google.com")) {
-            // गूगल ड्राइव लिंक रिपेयर
-            let id = "";
-            if (url.includes("id=")) { id = url.split("id=")[1].split("&")[0]; }
-            else { id = url.split("/d/")[1].split("/")[0]; }
+            let id = url.includes("id=") ? url.split("id=")[1].split("&")[0] : url.split("/d/")[1].split("/")[0];
             return `https://drive.google.com/file/d/${id}/preview`;
         }
         return url;
-    }
-
-    function getYouTubeEmbed(url) {
-        let videoId = "";
-        if (url.includes("v=")) { videoId = url.split("v=")[1].split("&")[0]; }
-        else if (url.includes("be/")) { videoId = url.split("be/")[1].split("?")[0]; }
-        else { videoId = url.split("/").pop(); }
-        return `https://www.youtube.com/embed/${videoId}?rel=0&modestbranding=1&autoplay=1`;
     }
 
     function loadContent(type, btn) {
         const frame = document.getElementById('displayFrame');
         const textV = document.getElementById('textViewer');
         const title = document.getElementById('contentTitle');
-        
         frame.style.display = "block"; textV.style.display = "none";
-        frame.src = "about:blank"; // क्लियर प्रीवियस फ्रेम
-
+        
         if(btn) { 
             document.querySelectorAll('.step-btn').forEach(b => b.classList.remove('active')); 
             btn.classList.add('active'); 
             updateProgress(btn.getAttribute('data-step'));
+            if(window.innerWidth <= 768) toggleSidebar(); 
         }
 
         switch(type) {
-            case 'syllabus': title.innerText = "Syllabus Content"; frame.src = fixDriveLink(window.d.syllabusLink); break;
-            case 'video': title.innerText = "Video Lecture"; frame.src = getYouTubeEmbed(window.d.videoURL); break;
+            case 'syllabus': title.innerText = "Syllabus"; frame.src = fixDriveLink(window.d.syllabusLink); break;
             case 'pdf': title.innerText = "PDF Book"; frame.src = fixDriveLink(window.d.sourcePDF); break;
-            case 'slides': title.innerText = "PPT Slides"; frame.src = "https://docs.google.com/viewer?embedded=true&url=" + encodeURIComponent(window.d.slidesURL); break;
-            case 'summary': title.innerText = "Summary"; frame.style.display = "none"; textV.style.display = "block"; textV.innerHTML = `<div style="padding:10px; white-space:pre-line;">${window.d.summaryText}</div>`; break;
             case 'mindmap': title.innerText = "Mind Map"; frame.src = fixDriveLink(window.d.mindmapData); break;
+            case 'certificate': title.innerText = "Certificate"; frame.src = fixDriveLink(window.d.Certificate); break;
+            case 'video':
+                title.innerText = "Video Lecture";
+                let vUrl = window.d.videoURL || "";
+                let vId = vUrl.includes('v=') ? vUrl.split('v=')[1].split('&')[0] : vUrl.split('/').pop().split('?')[0];
+                frame.src = `https://www.youtube.com/embed/${vId}?rel=0&modestbranding=1&autoplay=1&origin=${window.location.origin}`;
+                break;
+            case 'slides': 
+                title.innerText = "PPT Slides"; 
+                frame.src = `https://docs.google.com/viewer?embedded=true&url=${encodeURIComponent(window.d.slidesURL)}`; 
+                break;
+            case 'summary': 
+                title.innerText = "Summary"; frame.style.display = "none"; textV.style.display = "block"; 
+                textV.innerHTML = `<div style="padding:10px; white-space:pre-line;">${window.d.summaryText}</div>`; 
+                break;
             case 'quiz': title.innerText = "Quiz"; frame.src = window.d.quizData; break;
             case 'assignment': title.innerText = "Assignment"; frame.src = window.d.assignment; break;
-            case 'certificate': title.innerText = "Certificate"; frame.src = fixDriveLink(window.d.Certificate); break;
             case 'audio':
                 title.innerText = "Audio Podcast";
                 let aUrl = window.d.audioURL;
@@ -151,7 +170,7 @@
                     let aid = aUrl.includes("id=") ? aUrl.split("id=")[1].split("&")[0] : aUrl.split("/d/")[1].split("/")[0];
                     aUrl = `https://docs.google.com/uc?export=download&id=${aid}`;
                 }
-                frame.srcdoc = `<html><body style="display:flex;justify-content:center;align-items:center;height:90vh;font-family:sans-serif;background:#f9f9f9;"><div style="text-align:center;"><i class="fas fa-headphones" style="font-size:3rem;color:#FF6B35;margin-bottom:15px;"></i><br><audio controls autoplay src="${aUrl}"></audio></div><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"></body></html>`;
+                frame.srcdoc = `<html><body style="display:flex;justify-content:center;align-items:center;height:90vh;background:#f9f9f9;"><div style="text-align:center;"><i class="fas fa-headphones" style="font-size:3rem;color:#FF6B35;margin-bottom:15px;"></i><br><audio controls autoplay src="${aUrl}"></audio></div></body></html>`;
                 break;
         }
     }
