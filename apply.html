@@ -3,102 +3,73 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Apply - Shree Shivay Skills</title>
+    <title>Apply Admission - Shree Shivay Skills</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
         body { 
-            font-family: Arial, sans-serif; line-height: 1.6; color: #333; 
-            /* बैकग्राउंड इमेज हाईलाइट करने के लिए डार्क ओवरले */
-            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('background.jpg') no-repeat center center fixed;
+            font-family: 'Segoe UI', Tahoma, sans-serif; 
+            line-height: 1.6; color: #333; 
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('background.jpg') no-repeat center center fixed;
             background-size: cover;
         }
         
         .page-overlay { min-height: 100vh; padding-bottom: 3rem; }
 
-        /* --- HEADER (Matched with index.html) --- */
+        /* --- HEADER --- */
         header {
             background: linear-gradient(135deg, #FF6B35, #F7931E);
-            color: white; padding: 0.5rem 2rem; position: sticky; top: 0; z-index: 100;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            color: white; padding: 0.6rem 2rem; position: sticky; top: 0; z-index: 100;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.4);
         }
         .header-content { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
-        .logo { display: flex; align-items: center; gap: 12px; font-size: 1.5rem; font-weight: bold; text-decoration: none; color: white; }
-        .logo img { height: 50px; width: 50px; border-radius: 50%; border: 2px solid white; background: white; }
+        .logo { display: flex; align-items: center; gap: 12px; font-size: 1.4rem; font-weight: bold; text-decoration: none; color: white; }
+        .logo img { height: 48px; width: 48px; border-radius: 50%; border: 2px solid white; background: white; object-fit: cover; }
         
-        .nav-menu { display: flex; gap: 1rem; list-style: none; }
-        .nav-menu a { color: white; text-decoration: none; padding: 0.5rem 1rem; border-radius: 5px; font-weight: 500; }
-        .nav-menu a.active { background: rgba(255,255,255,0.3); border-bottom: 2px solid white; }
-
-        /* --- MOBILE MENU ICON --- */
-        .menu-toggle {
-            display: none;
-            flex-direction: column;
-            gap: 5px;
-            cursor: pointer;
-        }
-        .menu-toggle div {
-            width: 25px;
-            height: 3px;
-            background-color: white;
-            border-radius: 2px;
-        }
+        .nav-menu { display: flex; gap: 0.5rem; list-style: none; }
+        .nav-menu a { color: white; text-decoration: none; padding: 0.5rem 1rem; border-radius: 8px; font-weight: 500; transition: 0.3s; }
+        .nav-menu a.active { background: rgba(255,255,255,0.25); border-bottom: 2px solid white; }
 
         /* --- FORM CARD --- */
-        .container { max-width: 650px; margin: 3rem auto; padding: 0 1.5rem; }
+        .container { max-width: 600px; margin: 2.5rem auto; padding: 0 1.5rem; }
         .form-card { 
-            background: rgba(255, 255, 255, 0.96); 
+            background: rgba(255, 255, 255, 0.98); 
             padding: 2.5rem; 
             border-radius: 20px; 
-            box-shadow: 0 20px 40px rgba(0,0,0,0.4); 
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            border-top: 6px solid #FF6B35;
         }
-        .section-title { color: #e65100; text-align: center; margin-bottom: 2rem; font-size: 2rem; font-weight: bold; }
+        .section-title { color: #e65100; text-align: center; margin-bottom: 1.8rem; font-size: 1.8rem; font-weight: bold; }
         
-        .form-group { margin-bottom: 1.2rem; }
-        .form-group label { display: block; margin-bottom: 5px; font-weight: bold; color: #444; }
+        .form-group { margin-bottom: 1.2rem; text-align: left; }
+        .form-group label { display: block; margin-bottom: 6px; font-weight: bold; color: #444; font-size: 0.9rem; }
         .form-group input, .form-group select { 
             width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 10px; 
-            font-size: 1rem; transition: 0.3s;
+            font-size: 1rem; transition: 0.3s; outline: none;
         }
-        .form-group input:focus { border-color: #FF6B35; outline: none; background: #fffcfb; }
+        .form-group input:focus { border-color: #FF6B35; background: #fffcfb; }
         
         .btn { 
-            width: 100%; padding: 14px; 
+            width: 100%; padding: 15px; 
             background: linear-gradient(to right, #FF6B35, #F7931E); 
-            color: white; border: none; border-radius: 10px; 
+            color: white; border: none; border-radius: 12px; 
             font-size: 1.2rem; font-weight: bold; cursor: pointer; transition: 0.3s;
+            box-shadow: 0 4px 15px rgba(230,81,0,0.3);
         }
-        .btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(230,81,0,0.4); }
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(230,81,0,0.4); }
         
         .hidden { display: none; }
         .qr-box { 
-            text-align: center; background: #fff8f0; padding: 25px; 
+            text-align: center; background: #fff8f0; padding: 20px; 
             border-radius: 15px; margin: 20px 0; border: 2px dashed #FF6B35; 
         }
         .qr-box img { width: 180px; height: 180px; margin: 15px 0; border: 5px solid white; border-radius: 10px; }
 
-        /* --- FOOTER (Matched with Header) --- */
-        footer { 
-            background: linear-gradient(135deg, #FF6B35, #F7931E);
-            color: white; padding: 1.5rem; text-align: center; margin-top: 4rem; 
-        }
+        footer { background: rgba(0, 0, 0, 0.85); color: white; padding: 1.2rem; text-align: center; margin-top: auto; font-size: 0.85rem; }
 
         @media (max-width: 768px) {
-            .menu-toggle { display: flex; }
-            .nav-menu {
-                display: none;
-                flex-direction: column;
-                position: absolute;
-                top: 65px;
-                left: 0;
-                width: 100%;
-                background: #F7931E;
-                padding: 20px;
-                gap: 10px;
-                box-shadow: 0 5px 10px rgba(0,0,0,0.2);
-            }
-            .nav-menu.show { display: flex; }
-            .nav-menu a { display: block; width: 100%; text-align: center; padding: 10px; }
+            .nav-menu { display: none; }
             .form-card { padding: 1.5rem; }
         }
     </style>
@@ -108,18 +79,12 @@
     <header>
         <div class="header-content">
             <a href="index.html" class="logo"><img src="omsss.jpeg"> <span>Shree Shivay Skills</span></a>
-            
-            <div class="menu-toggle" onclick="toggleMenu()">
-                <div></div><div></div><div></div>
-            </div>
-
             <nav>
-                <ul class="nav-menu" id="navMenu">
+                <ul class="nav-menu">
                     <li><a href="index.html">Home</a></li>
-                    <li><a href="about.html">About Us</a></li>
-                    <li><a href="courses.html">Courses</a></li>
                     <li><a href="apply.html" class="active">Apply</a></li>
                     <li><a href="contact.html">Contact</a></li>
+                    <li><a href="login.html">Login</a></li>
                 </ul>
             </nav>
         </div>
@@ -127,84 +92,86 @@
 
     <div class="container">
         <div class="form-card">
-            <h2 class="section-title">Admission Enrollment</h2>
+            <h2 class="section-title"><i class="fas fa-user-edit"></i> Admission Enrollment</h2>
             
             <form name="submit-to-google-sheet">
                 <input type="hidden" name="Date" id="currentDate">
                 <input type="hidden" name="Status" value="Active">
 
                 <div id="step-1">
-                    <div class="form-group"><label>Full Name *</label><input type="text" name="Name" required></div>
-                    <div class="form-group"><label>Email Address *</label><input type="email" name="Email" required></div>
-                    <div class="form-group"><label>Mobile Number (WhatsApp) *</label><input type="tel" name="Mobile" required pattern="[0-9]{10}"></div>
-                    <div class="form-group"><label>State *</label><input type="text" name="State" required></div>
-                    <div class="form-group"><label>City *</label><input type="text" name="City" required></div>
-                    <div class="form-group"><label>Create Password *</label><input type="password" name="Password" required placeholder="For student login"></div>
+                    <div class="form-group"><label>2. Full Name *</label><input type="text" name="Name" required placeholder="Enter full name"></div>
+                    <div class="form-group"><label>3. Email Address *</label><input type="email" name="Email" required placeholder="example@mail.com"></div>
+                    <div class="form-group"><label>4. Mobile Number (WhatsApp) *</label><input type="tel" name="Mobile" required pattern="[0-9]{10}" placeholder="10 digit mobile number"></div>
+                    <div class="form-group"><label>5. State *</label><input type="text" name="State" required placeholder="e.g. Madhya Pradesh"></div>
+                    <div class="form-group"><label>6. City *</label><input type="text" name="City" required placeholder="e.g. Khargone"></div>
                     
                     <div class="form-group">
-                        <label>Select Course *</label>
+                        <label>7. Select Course & Fee *</label>
                         <select name="Course" id="courseSelect" required>
-                            <option value="">-- Choose 1 of 15 Courses --</option>
-                            <optgroup label="💻 IT & Computer Science">
-                                <option>Basic Excel - ₹2,999</option>
-                                <option>Advanced Excel - ₹3,999</option>
-                                <option>Excel Data Analysis - ₹5,999</option>
-                                <option>Excel Dashboard Creation - ₹6,999</option>
-                                <option>Basic Power BI - ₹5,999</option>
-                                <option>Advanced Power BI - ₹7,999</option>
-                                <option>MS Office Complete - ₹3,999</option>
-                            </optgroup>
-                            <optgroup label="🧘 Health & Wellness">
-                                <option>Basic Ayurveda - ₹5,999</option>
-                                <option>Advanced Ayurveda - ₹8,999</option>
-                                <option>Ashtang Yoga Course - ₹6,999</option>
-                                <option>Naturopathy Basics - ₹4,999</option>
-                            </optgroup>
-                            <optgroup label="📖 Sanskrit Education">
-                                <option>Sanskrit Speaking - ₹3,999</option>
-                                <option>Sanskrit Grammar (Excel Based) - ₹4,999</option>
-                                <option>Gita Path & Meaning - ₹5,999</option>
-                                <option>Shad-Vedanga Basics - ₹6,999</option>
-                            </optgroup>
+                            <option value="">-- Choose Course --</option>
+                            <option>Basic Excel ₹2999</option>
+                            <option>Advanced Excel ₹3999</option>
+                            <option>Excel Data Analysis ₹5999</option>
+                            <option>Excel Dashboard Creation ₹6999</option>
+                            <option>Basic Power BI ₹5999</option>
+                            <option>Advanced Power BI ₹7999</option>
+                            <option>MS Office Complete ₹3999</option>
+                            <option>Basic Ayurveda ₹5999</option>
+                            <option>Advanced Ayurveda ₹8999</option>
+                            <option>Ashtang Yoga Course ₹6999</option>
+                            <option>Naturopathy Basics ₹4999</option>
+                            <option>Sanskrit Speaking ₹3999</option>
+                            <option>Sanskrit Grammar (Excel Based) ₹4999</option>
+                            <option>Learn Gita Basics ₹5999</option>
+                            <option>Shad-Vedanga Basics ₹6999</option>
                         </select>
                     </div>
 
-                    <button type="button" class="btn" onclick="goToStep2()">Next: Payment Details</button>
+                    <div class="form-group"><label>9. Create Student Password *</label><input type="password" name="Password" required placeholder="Create password for login"></div>
+                    
+                    <button type="button" class="btn" onclick="goToStep2()">Next: Payment <i class="fas fa-arrow-right"></i></button>
                 </div>
 
                 <div id="step-2" class="hidden">
                     <div class="qr-box">
-                        <p style="font-weight:bold; color:#e65100;">Scan QR to Pay Fee</p>
-                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=9893663578@ybl&pn=SSS_Institute" alt="Payment QR">
+                        <p style="font-weight:bold; color:#e65100;">Scan to Pay Course Fee</p>
+                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=9893663578@ybl&pn=ShreeShivaySkills" alt="Payment QR">
                         <p><b>UPI ID: 9893663578@ybl</b></p>
+                        <p style="font-size: 0.8rem; color: #666; margin-top: 5px;">पैसे भेजने के बाद ट्रांजैक्शन आईडी नीचे भरें</p>
                     </div>
-                    <div class="form-group"><label>Transaction ID / UTR No. *</label><input type="text" name="TransactionID" required placeholder="Enter 12 digit number"></div>
-                    <button type="submit" class="btn" id="submitBtn">Submit Final Application</button>
-                    <p style="text-align:center; margin-top:15px; cursor:pointer; text-decoration:underline; color:#666;" onclick="goToStep1()">← Edit Student Info</p>
+                    
+                    <div class="form-group">
+                        <label>8. Transaction ID / UTR No. *</label>
+                        <input type="text" name="TransactionID" required placeholder="Enter 12 digit Transaction ID">
+                    </div>
+
+                    <button type="submit" class="btn" id="submitBtn">Submit Final Application <i class="fas fa-check-circle"></i></button>
+                    <p style="text-align:center; margin-top:15px; cursor:pointer; font-weight:bold; color:#666;" onclick="goToStep1()">← Edit Student Info</p>
                 </div>
             </form>
         </div>
     </div>
 
-    <footer><p>© 2026 Shree Shivay Skills - All Rights Reserved</p></footer>
+    <footer><p>© 2026 Shree Shivay Skills | Digital Gurukul Khargone</p></footer>
 </div>
 
 <script>
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbyfXUnXEW9-GtLQNf5FIEpdRIieusqIb5B1kR-FhQnNaNNj28M4dgKecrfREqLMYtRF/exec';
+    // आपका Web App URL
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbzrmGKnspyr383f9QzEIKBOknC2s-YreNG18VA7cun0txUnQZOVwGaWHkGPkIvFQzAk/exec';
     
-    document.getElementById('currentDate').value = new Date().toLocaleDateString();
-
-    function toggleMenu() {
-        var menu = document.getElementById("navMenu");
-        menu.classList.toggle("show");
-    }
+    // वर्तमान दिनांक और समय सेट करना
+    document.getElementById('currentDate').value = new Date().toLocaleString();
 
     function goToStep2() {
         const form = document.forms['submit-to-google-sheet'];
-        if(form.Name.value && form.Mobile.value && form.Password.value && form.Course.value) {
+        // Validation check
+        if(form.Name.value && form.Email.value && form.Mobile.value && form.Course.value && form.Password.value) {
             document.getElementById('step-1').classList.add('hidden');
             document.getElementById('step-2').classList.remove('hidden');
-        } else { alert("कृपया सभी अनिवार्य जानकारी भरें!"); }
+            window.scrollTo(0,0);
+        } else {
+            alert("कृपया सभी अनिवार्य जानकारी (*) भरें!");
+        }
     }
 
     function goToStep1() {
@@ -216,17 +183,19 @@
     form.addEventListener('submit', e => {
         e.preventDefault();
         const btn = document.getElementById('submitBtn');
-        btn.innerText = "Processing Admission...";
+        btn.innerText = "Processing Admission... Please Wait";
         btn.disabled = true;
 
-        fetch(scriptURL, { method: 'POST', body: new FormData(form), mode: 'no-cors'})
-        .then(response => {
-            alert('✅ बधाई हो! आपका आवेदन सफलतापूर्वक सबमिट हो गया है।');
+        fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+        .then(response => response.json())
+        .then(data => {
+            alert('✅ सफलता! आपका आवेदन और भुगतान जानकारी सुरक्षित रूप से सबमिट कर दी गई है।');
             form.reset();
             window.location.href = "index.html"; 
         })
         .catch(error => {
-            alert('❌ त्रुटि! कृपया इंटरनेट चेक करें।');
+            console.error('Error!', error.message);
+            alert('❌ त्रुटि! आवेदन भेजने में समस्या आई। कृपया अपना इंटरनेट चेक करें।');
             btn.innerText = "Submit Final Application";
             btn.disabled = false;
         });

@@ -4,78 +4,48 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact Us - Shree Shivay Skills</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { 
-            font-family: Arial, sans-serif; line-height: 1.6; color: #333; 
-            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('background.jpg') no-repeat center center fixed;
+            font-family: 'Segoe UI', Arial, sans-serif; 
+            line-height: 1.6; color: #333; 
+            background: linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.65)), url('background.jpg') no-repeat center center fixed;
             background-size: cover;
         }
-        .page-overlay { min-height: 100vh; padding-bottom: 3rem; }
+        .page-overlay { min-height: 100vh; display: flex; flex-direction: column; }
         
-        /* --- HEADER (Matched with index.html) --- */
         header { 
             background: linear-gradient(135deg, #FF6B35, #F7931E); 
-            color: white; padding: 0.5rem 2rem; position: sticky; 
-            top: 0; z-index: 100; box-shadow: 0 4px 10px rgba(0,0,0,0.3); 
+            color: white; padding: 0.6rem 2rem; position: sticky; 
+            top: 0; z-index: 100; box-shadow: 0 4px 15px rgba(0,0,0,0.4); 
         }
         .header-content { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
-        .logo { display: flex; align-items: center; gap: 12px; font-size: 1.5rem; font-weight: bold; text-decoration: none; color: white; }
-        .logo img { height: 50px; width: 50px; border-radius: 50%; border: 2px solid white; background: white; }
+        .logo { display: flex; align-items: center; gap: 12px; font-size: 1.4rem; font-weight: bold; text-decoration: none; color: white; }
+        .logo img { height: 48px; width: 48px; border-radius: 50%; border: 2px solid white; background: white; object-fit: cover; }
         
-        .nav-menu { display: flex; gap: 1rem; list-style: none; }
-        .nav-menu a { color: white; text-decoration: none; padding: 0.5rem 1rem; border-radius: 5px; font-weight: 500; transition: 0.3s; }
-        .nav-menu a.active { background: rgba(255,255,255,0.3); border-bottom: 2px solid white; }
+        .nav-menu { display: flex; gap: 0.5rem; list-style: none; }
+        .nav-menu a { color: white; text-decoration: none; padding: 0.5rem 1rem; border-radius: 8px; font-weight: 500; transition: 0.3s; }
+        .nav-menu a:hover, .nav-menu a.active { background: rgba(255,255,255,0.25); border-bottom: 2px solid white; }
 
-        /* --- MOBILE MENU ICON --- */
-        .menu-toggle {
-            display: none;
-            flex-direction: column;
-            gap: 5px;
-            cursor: pointer;
-        }
-        .menu-toggle div {
-            width: 25px;
-            height: 3px;
-            background-color: white;
-            border-radius: 2px;
-        }
-
-        .container { max-width: 1100px; margin: 3rem auto; padding: 0 1.5rem; display: grid; grid-template-columns: 1fr 1.2fr; gap: 2rem; }
-        .info-card, .contact-form-box { background: rgba(255, 255, 255, 0.95); padding: 2.5rem; border-radius: 20px; box-shadow: 0 15px 35px rgba(0,0,0,0.4); }
-        .section-title { color: #e65100; margin-bottom: 1.5rem; font-size: 1.8rem; border-bottom: 2px solid #FF6B35; display: inline-block; padding-bottom: 5px; }
+        .container { max-width: 1100px; margin: 2rem auto; padding: 0 1.5rem; display: grid; grid-template-columns: 1fr 1.3fr; gap: 2rem; flex: 1; }
+        .info-card, .contact-form-box { background: rgba(255, 255, 255, 0.97); padding: 2rem; border-radius: 20px; box-shadow: 0 20px 45px rgba(0,0,0,0.5); }
+        .section-title { color: #e65100; margin-bottom: 1.5rem; font-size: 1.6rem; border-bottom: 3px solid #FF6B35; display: inline-block; padding-bottom: 5px; }
         
-        .form-group { margin-bottom: 1.2rem; }
-        .form-group label { display: block; margin-bottom: 5px; font-weight: bold; color: #444; }
-        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 10px; font-size: 1rem; }
+        .info-card p { margin-bottom: 15px; display: flex; align-items: center; gap: 10px; font-size: 0.95rem; }
+        .info-card i { color: #FF6B35; }
+
+        .form-group { margin-bottom: 1rem; text-align: left; }
+        .form-group label { display: block; margin-bottom: 4px; font-weight: bold; color: #444; font-size: 0.85rem; }
+        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 10px; border: 2px solid #ddd; border-radius: 8px; font-size: 0.95rem; outline: none; transition: 0.3s; }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: #FF6B35; }
         
-        .btn-submit { width: 100%; padding: 15px; background: linear-gradient(to right, #FF6B35, #F7931E); color: white; border: none; border-radius: 10px; font-size: 1.2rem; font-weight: bold; cursor: pointer; transition: 0.3s; }
-        .btn-submit:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(230,81,0,0.4); }
+        .btn-submit { width: 100%; padding: 14px; background: linear-gradient(to right, #FF6B35, #F7931E); color: white; border: none; border-radius: 10px; font-size: 1.1rem; font-weight: bold; cursor: pointer; transition: 0.3s; }
+        .btn-submit:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(230,81,0,0.4); }
 
-        /* --- FOOTER (Matched with Header) --- */
-        footer { 
-            background: linear-gradient(135deg, #FF6B35, #F7931E); 
-            color: white; padding: 1.5rem; text-align: center; margin-top: 4rem; 
-        }
+        footer { background: rgba(0, 0, 0, 0.85); color: white; padding: 1rem; text-align: center; }
 
-        @media (max-width: 850px) { 
-            .container { grid-template-columns: 1fr; } 
-            .menu-toggle { display: flex; }
-            .nav-menu {
-                display: none;
-                flex-direction: column;
-                position: absolute;
-                top: 65px;
-                left: 0;
-                width: 100%;
-                background: #F7931E;
-                padding: 20px;
-                gap: 10px;
-                box-shadow: 0 5px 10px rgba(0,0,0,0.2);
-            }
-            .nav-menu.show { display: flex; }
-            .nav-menu a { display: block; width: 100%; text-align: center; padding: 10px; }
-        }
+        @media (max-width: 850px) { .container { grid-template-columns: 1fr; } .nav-menu { display: none; } }
     </style>
 </head>
 <body>
@@ -83,18 +53,12 @@
     <header>
         <div class="header-content">
             <a href="index.html" class="logo"><img src="omsss.jpeg"> <span>Shree Shivay Skills</span></a>
-            
-            <div class="menu-toggle" id="mobile-menu" onclick="toggleMenu()">
-                <div></div><div></div><div></div>
-            </div>
-
             <nav>
-                <ul class="nav-menu" id="navMenu">
+                <ul class="nav-menu">
                     <li><a href="index.html">Home</a></li>
-                    <li><a href="about.html">About Us</a></li>
-                    <li><a href="courses.html">Courses</a></li>
                     <li><a href="apply.html">Apply</a></li>
                     <li><a href="contact.html" class="active">Contact</a></li>
+                    <li><a href="login.html">Login</a></li>
                 </ul>
             </nav>
         </div>
@@ -103,69 +67,84 @@
     <div class="container">
         <div class="info-card">
             <h2 class="section-title">संपर्क विवरण</h2>
-            <p style="margin-bottom: 15px;">📍 <strong>पता:</strong> खरगोन, मध्य प्रदेश</p>
-            <p style="margin-bottom: 15px;">📧 <strong>ईमेल:</strong> shreeshivayskills@gmail.com</p>
-            <p style="margin-bottom: 15px;">📞 <strong>व्हाट्सएप:</strong> +91 9926953078</p>
-            <p>🕒 <strong>समय:</strong> 10:00 AM - 06:00 PM</p>
+            <p><i class="fas fa-map-marker-alt"></i> <span><strong>पता:</strong> खरगोन, मध्य प्रदेश</span></p>
+            <p><i class="fas fa-envelope"></i> <span><strong>ईमेल:</strong> shreeshivayskills@gmail.com</span></p>
+            <p><i class="fas fa-phone-alt"></i> <span><strong>व्हाट्सएप:</strong> +91 9926953078</span></p>
+            <p><i class="fas fa-clock"></i> <span><strong>समय:</strong> 10:00 AM - 06:00 PM</span></p>
         </div>
 
         <div class="contact-form-box">
             <h2 class="section-title">Enquiry Form</h2>
-            <form name="submit-to-contact-sheet">
+            <form id="contactForm">
                 <input type="hidden" name="Date" id="contactDate">
                 
                 <div class="form-group"><label>आपका नाम *</label><input type="text" name="Name" required></div>
+                
                 <div class="form-group"><label>ईमेल एड्रेस *</label><input type="email" name="Email" required></div>
+                
                 <div class="form-group"><label>मोबाइल नंबर *</label><input type="tel" name="Mobile" required pattern="[0-9]{10}"></div>
+                
                 <div class="form-group"><label>राज्य (State) *</label><input type="text" name="State" required></div>
+                
                 <div class="form-group"><label>शहर (City) *</label><input type="text" name="City" required></div>
                 
                 <div class="form-group">
-                    <label>किस कोर्स की जानकारी चाहिए? *</label>
+                    <label>कोर्स चुनें *</label>
                     <select name="Course" required>
-                        <option value="IT Inquiry">IT & CS Inquiry</option>
-                        <option value="Health Inquiry">Health Inquiry</option>
-                        <option value="Sanskrit Inquiry">Sanskrit Inquiry</option>
-                        <option value="Other">Other</option>
+                        <option value="">कोर्स का चयन करें</option>
+                        <option value="Basic Excel">Basic Excel</option>
+                        <option value="Advanced Excel">Advanced Excel</option>
+                        <option value="Excel Data Analysis">Excel Data Analysis</option>
+                        <option value="Excel Dashboard Creation">Excel Dashboard Creation</option>
+                        <option value="Basic Power BI">Basic Power BI</option>
+                        <option value="Advanced Power BI">Advanced Power BI</option>
+                        <option value="MS Office Complete">MS Office Complete</option>
+                        <option value="Basic Ayurveda">Basic Ayurveda</option>
+                        <option value="Advanced Ayurveda">Advanced Ayurveda</option>
+                        <option value="Ashtang Yoga Course">Ashtang Yoga Course</option>
+                        <option value="Naturopathy Basics">Naturopathy Basics</option>
+                        <option value="Sanskrit Speaking">Sanskrit Speaking</option>
+                        <option value="Sanskrit Grammar (Excel Based)">Sanskrit Grammar (Excel Based)</option>
+                        <option value="Learn Gita Basics">Learn Gita Basics</option>
+                        <option value="Shad-Vedanga Basics">Shad-Vedanga Basics</option>
                     </select>
                 </div>
 
-                <div class="form-group"><label>आपका संदेश *</label><textarea name="Message" rows="4" required></textarea></div>
+                <div class="form-group"><label>आपका संदेश *</label><textarea name="Message" rows="3" required></textarea></div>
 
-                <button type="submit" class="btn-submit" id="submitBtn">Send Message</button>
+                <button type="submit" class="btn-submit" id="submitBtn">Send Inquiry</button>
             </form>
         </div>
     </div>
-    <footer><p>© 2026 Shree Shivay Skills - All Rights Reserved</p></footer>
+    <footer><p>© 2026 Shree Shivay Skills | Digital Gurukul</p></footer>
 </div>
 
 <script>
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbyfXUnXEW9-GtLQNf5FIEpdRIieusqIb5B1kR-FhQnNaNNj28M4dgKecrfREqLMYtRF/exec';
-    document.getElementById('contactDate').value = new Date().toLocaleDateString();
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbzrmGKnspyr383f9QzEIKBOknC2s-YreNG18VA7cun0txUnQZOVwGaWHkGPkIvFQzAk/exec';
+    
+    // Date set करना
+    document.getElementById('contactDate').value = new Date().toLocaleString();
 
-    const form = document.forms['submit-to-contact-sheet'];
-
-    function toggleMenu() {
-        var menu = document.getElementById("navMenu");
-        menu.classList.toggle("show");
-    }
+    const form = document.getElementById('contactForm');
 
     form.addEventListener('submit', e => {
         e.preventDefault();
         const btn = document.getElementById('submitBtn');
-        btn.innerText = "Processing...";
+        btn.innerText = "भेज रहे हैं...";
         btn.disabled = true;
 
-        fetch(scriptURL, { method: 'POST', body: new FormData(form), mode: 'no-cors'})
-        .then(() => {
-            alert('✅ धन्यवाद! आपकी पूछताछ "Contact" शीट में सुरक्षित रूप से दर्ज कर ली गई है।');
+        fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+        .then(response => response.json())
+        .then(data => {
+            alert('धन्यवाद! आपका संदेश दर्ज कर लिया गया है।');
             form.reset();
-            btn.innerText = "Send Message";
+            btn.innerText = "Send Inquiry";
             btn.disabled = false;
         })
         .catch(error => {
-            alert('❌ त्रुटि! कृपया इंटरनेट या स्क्रिप्ट यूआरएल जांचें।');
+            alert('त्रुटि! कृपया पुनः प्रयास करें।');
             btn.disabled = false;
+            btn.innerText = "Send Inquiry";
         });
     });
 </script>

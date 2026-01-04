@@ -3,153 +3,159 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student Dashboard - Shree Shivay Skills</title>
+    <title>SSS Smart Dashboard - Final Fix</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
+        :root { --primary: #e65100; --accent: #FF6B35; }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { 
-            font-family: Arial, sans-serif; background: #f4f7f6; color: #333; 
-            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('background.jpg') no-repeat center center fixed;
-            background-size: cover;
-        }
-        
-        .dashboard-overlay { min-height: 100vh; padding: 20px; }
-
-        /* --- DASHBOARD LAYOUT --- */
-        .container { max-width: 1000px; margin: 0 auto; }
-        
-        .header-dash { 
-            background: white; padding: 20px; border-radius: 15px; 
-            display: flex; justify-content: space-between; align-items: center;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2); margin-bottom: 30px;
-        }
-        .user-info h2 { color: #e65100; }
-        .logout-btn { background: #ff4444; color: white; padding: 8px 15px; border-radius: 5px; text-decoration: none; font-weight: bold; }
-
-        .main-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 20px; }
-
-        /* --- COURSE CARD --- */
-        .card { background: white; padding: 25px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); margin-bottom: 20px; }
-        .card h3 { border-bottom: 2px solid #eee; padding-bottom: 10px; margin-bottom: 15px; color: #FF6B35; }
-
-        .status-badge { 
-            display: inline-block; padding: 5px 12px; border-radius: 20px; 
-            font-size: 0.9rem; font-weight: bold; 
-        }
-        .active-status { background: #e8f5e9; color: #2e7d32; } /* Green */
-        .pending-status { background: #fff3e0; color: #ef6c00; } /* Orange */
-
-        .progress-bar { background: #eee; height: 10px; border-radius: 5px; margin: 15px 0; overflow: hidden; }
-        .progress-fill { background: #FF6B35; height: 100%; width: 5%; } /* इसे बाद में डायनामिक करेंगे */
-
-        /* --- LOADING OVERLAY --- */
-        #loader { 
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
-            background: white; display: flex; align-items: center; justify-content: center; z-index: 1000; 
-        }
-
-        @media (max-width: 768px) { .main-grid { grid-template-columns: 1fr; } }
+        body { font-family: 'Segoe UI', sans-serif; height: 100vh; overflow: hidden; background: #000 url('background.jpg') center/cover fixed; }
+        .wrapper { display: flex; height: calc(100vh - 110px); }
+        .top-nav { height: 60px; background: rgba(255,255,255,0.95); display: flex; justify-content: space-between; align-items: center; padding: 0 25px; border-bottom: 3px solid var(--accent); }
+        .main-viewer { flex: 1; padding: 15px; display: flex; flex-direction: column; }
+        .content-card { background: white; flex: 1; border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .viewer-header { padding: 12px 20px; border-bottom: 1px solid #eee; background: #fafafa; font-weight: bold; color: var(--primary); display: flex; justify-content: space-between; }
+        #displayFrame { width: 100%; height: 100%; border: none; background: #fff; }
+        #textViewer { padding: 30px; overflow-y: auto; height: 100%; display: none; background: #fff; font-size: 1.1rem; line-height: 1.8; }
+        .right-sidebar { width: 210px; background: rgba(255,255,255,0.92); padding: 15px; overflow-y: auto; }
+        .info-panel { font-size: 0.8rem; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 1px solid #ccc; }
+        .step-btn { width: 100%; padding: 10px; margin-bottom: 6px; border: 1px solid #eee; border-radius: 6px; background: #fff; text-align: left; cursor: pointer; display: flex; align-items: center; gap: 8px; font-size: 0.8rem; font-weight: 500; transition: 0.2s; }
+        .step-btn.active { background: var(--accent); color: white; border-color: var(--accent); }
+        .footer-progress { height: 50px; background: #fff; padding: 0 25px; display: flex; align-items: center; gap: 15px; position: fixed; bottom: 0; width: 100%; border-top: 1px solid #ddd; }
+        .p-bar-bg { flex: 1; height: 12px; background: #eee; border-radius: 10px; overflow: hidden; }
+        .p-bar-fill { height: 100%; background: linear-gradient(to right, #4CAF50, #81C784); width: 0%; transition: 1s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        #loader { position: fixed; inset: 0; background: #fff; display: flex; justify-content: center; align-items: center; z-index: 2000; }
     </style>
 </head>
 <body>
 
-    <div id="loader"><h2>Verifying your details...</h2></div>
+<div id="loader"><h2>प्रभु स्मरण के साथ पोर्टल लोड हो रहा है...</h2></div>
 
-    <div class="dashboard-overlay">
-        <div class="container">
-            
-            <div class="header-dash">
-                <div class="user-info">
-                    <h2 id="studentName">नमस्कार, छात्र!</h2>
-                    <p id="studentEmailDisplay">Loading email...</p>
-                </div>
-                <a href="#" class="logout-btn" onclick="logout()">Logout</a>
-            </div>
-
-            <div class="main-grid">
-                <div class="content-area">
-                    <div class="card">
-                        <h3>My Enrolled Course</h3>
-                        <h1 id="courseTitle" style="font-size: 1.5rem; margin-bottom: 10px;">Loading course...</h1>
-                        <p>Status: <span id="paymentStatus" class="status-badge pending-status">Pending Verification</span></p>
-                        
-                        <div class="progress-container" style="margin-top: 20px;">
-                            <p>Course Progress: <b>5%</b></p>
-                            <div class="progress-bar"><div class="progress-fill"></div></div>
-                        </div>
-
-                        <div style="margin-top: 20px; background: #f9f9f9; padding: 15px; border-radius: 10px; border-left: 5px solid #FF6B35;">
-                            <h4>📖 Study Material</h4>
-                            <p style="font-size: 0.9rem; color: #666; margin-top: 5px;">जैसे ही आपका पेमेंट वेरीफाई होगा, यहाँ आपका लर्निंग मटेरियल (Videos/PDF) दिखने लगेगा।</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="sidebar">
-                    <div class="card">
-                        <h3>Notice Board</h3>
-                        <ul style="list-style: none; font-size: 0.9rem;">
-                            <li style="margin-bottom: 10px; border-bottom: 1px dashed #ddd; padding-bottom: 5px;">📌 नई क्लास सोमवार से शुरू होगी।</li>
-                            <li style="margin-bottom: 10px; border-bottom: 1px dashed #ddd; padding-bottom: 5px;">📄 कृपया ट्रांजेक्शन आईडी सही भरें।</li>
-                        </ul>
-                    </div>
-                    <div class="card" style="text-align: center;">
-                        <p>Help Desk</p>
-                        <a href="https://wa.me/919893663578" style="color: #25D366; font-weight: bold; text-decoration: none;">Chat on WhatsApp</a>
-                    </div>
-                </div>
-            </div>
-        </div>
+<nav class="top-nav">
+    <div style="display:flex; align-items:center; gap:10px;">
+        <img src="omsss.jpeg" style="height:35px; border-radius:50%; border: 1px solid #ddd;">
+        <h4 id="stName">नमस्कार!</h4>
     </div>
+    <button onclick="logout()" style="background:#ff4444; color:white; border:none; padding:6px 12px; border-radius:5px; cursor:pointer; font-weight:bold;">Logout</button>
+</nav>
+
+<div class="wrapper">
+    <main class="main-viewer">
+        <div class="content-card">
+            <div class="viewer-header">
+                <span id="contentTitle">अध्ययन कक्ष</span>
+                <span id="chapNo" style="font-size: 0.8rem; color: #666;">शुरुआत करें</span>
+            </div>
+            <iframe id="displayFrame" src="about:blank" allow="autoplay; fullscreen; encrypted-media"></iframe>
+            <div id="textViewer"></div>
+        </div>
+    </main>
+
+    <aside class="right-sidebar">
+        <div class="info-panel" id="sideInfo"></div>
+        <button class="step-btn" data-step="1" onclick="loadContent('syllabus', this)"><i class="fas fa-folder-open"></i> 📂 Syllabus Content</button>
+        <div style="margin:15px 0 8px 0; font-size:0.7rem; font-weight:bold; color:#666; text-transform:uppercase;">अध्ययन सामग्री</div>
+        <button class="step-btn" data-step="2" onclick="loadContent('video', this)"><i class="fas fa-play-circle"></i> Video Talk</button>
+        <button class="step-btn" data-step="3" onclick="loadContent('pdf', this)"><i class="fas fa-file-pdf"></i> PDF Book</button>
+        <button class="step-btn" data-step="4" onclick="loadContent('audio', this)"><i class="fas fa-headphones"></i> Podcast</button>
+        <button class="step-btn" data-step="5" onclick="loadContent('slides', this)"><i class="fas fa-chalkboard-teacher"></i> PPT Slides</button>
+        <button class="step-btn" data-step="6" onclick="loadContent('summary', this)"><i class="fas fa-file-alt"></i> Summary</button>
+        <button class="step-btn" data-step="7" onclick="loadContent('mindmap', this)"><i class="fas fa-project-diagram"></i> Mind Map</button>
+        <button class="step-btn" data-step="8" onclick="loadContent('quiz', this)"><i class="fas fa-question-circle"></i> Quiz</button>
+        <button class="step-btn" data-step="9" onclick="loadContent('assignment', this)"><i class="fas fa-edit"></i> Assignment</button>
+        <button class="step-btn" data-step="10" onclick="loadContent('certificate', this)" style="border: 2px solid var(--accent); margin-top: 10px;">
+            <i class="fas fa-award"></i> Certificate
+        </button>
+    </aside>
+</div>
+
+<footer class="footer-progress">
+    <span style="font-size:0.8rem; font-weight:bold; color:var(--primary);">प्रगति:</span>
+    <div class="p-bar-bg"><div class="p-bar-fill" id="progFill"></div></div>
+    <span style="font-size:0.8rem; font-weight:bold;" id="progText">0%</span>
+</footer>
 
 <script>
-    // आपका गूगल स्क्रिप्ट URL (Data Fetch करने के लिए)
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbyfXUnXEW9-GtLQNf5FIEpdRIieusqIb5B1kR-FhQnNaNNj28M4dgKecrfREqLMYtRF/exec';
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbzrmGKnspyr383f9QzEIKBOknC2s-YreNG18VA7cun0txUnQZOVwGaWHkGPkIvFQzAk/exec';
+    let completedSteps = new Set();
 
     window.onload = function() {
         const email = localStorage.getItem('studentEmail');
         const pass = localStorage.getItem('studentPass');
-
-        if (!email || !pass) {
-            window.location.href = "login.html";
-            return;
-        }
-
-        // गूगल शीट से डेटा चेक करना (Login Verification)
-        fetch(scriptURL + "?action=login&email=" + email + "&pass=" + pass)
-        .then(res => res.json())
-        .then(data => {
+        fetch(`${scriptURL}?action=login&email=${email}&pass=${pass}`)
+        .then(res => res.json()).then(data => {
             document.getElementById('loader').style.display = 'none';
-            
             if(data.result === "success") {
-                // डेटा मिल गया, डैशबोर्ड अपडेट करें
-                document.getElementById('studentName').innerText = "नमस्कार, " + data.name + "!";
-                document.getElementById('studentEmailDisplay').innerText = data.email;
-                document.getElementById('courseTitle').innerText = data.course;
-                
-                const statusBadge = document.getElementById('paymentStatus');
-                statusBadge.innerText = data.status;
-                if(data.status === "Active") {
-                    statusBadge.className = "status-badge active-status";
-                }
-            } else {
-                alert("गलत ईमेल या पासवर्ड! कृपया दोबारा प्रयास करें।");
-                logout();
-            }
-        })
-        .catch(err => {
-            console.error(err);
-            // यदि अभी आपका Apps Script "Login Get" के लिए तैयार नहीं है, 
-            // तो टेस्टिंग के लिए हम लोडर हटा देते हैं
-            document.getElementById('loader').style.display = 'none';
-            document.getElementById('studentEmailDisplay').innerText = email;
-            document.getElementById('courseTitle').innerText = "System testing mode...";
-        });
+                window.d = data.content;
+                document.getElementById('stName').innerText = "नमस्कार, " + data.name + "!";
+                document.getElementById('sideInfo').innerHTML = `<b>ID:</b> ${window.d.courseID}<br><b>कोर्स:</b> ${window.d.courseName}`;
+                document.getElementById('chapNo').innerText = "अध्याय: " + window.d.lessonNo;
+            } else { logout(); }
+        }).catch(err => { alert("कनेक्शन में समस्या!"); logout(); });
     };
 
-    function logout() {
-        localStorage.clear();
-        window.location.href = "login.html";
+    function updateProgress(stepId) {
+        completedSteps.add(stepId);
+        const percentage = Math.round((completedSteps.size / 10) * 100);
+        document.getElementById('progFill').style.width = percentage + "%";
+        document.getElementById('progText').innerText = percentage + "%";
     }
+
+    function fixDriveLink(url) {
+        if (!url || url === "") return "about:blank";
+        if (url.includes("drive.google.com")) {
+            // गूगल ड्राइव लिंक रिपेयर
+            let id = "";
+            if (url.includes("id=")) { id = url.split("id=")[1].split("&")[0]; }
+            else { id = url.split("/d/")[1].split("/")[0]; }
+            return `https://drive.google.com/file/d/${id}/preview`;
+        }
+        return url;
+    }
+
+    function getYouTubeEmbed(url) {
+        let videoId = "";
+        if (url.includes("v=")) { videoId = url.split("v=")[1].split("&")[0]; }
+        else if (url.includes("be/")) { videoId = url.split("be/")[1].split("?")[0]; }
+        else { videoId = url.split("/").pop(); }
+        return `https://www.youtube.com/embed/${videoId}?rel=0&modestbranding=1&autoplay=1`;
+    }
+
+    function loadContent(type, btn) {
+        const frame = document.getElementById('displayFrame');
+        const textV = document.getElementById('textViewer');
+        const title = document.getElementById('contentTitle');
+        
+        frame.style.display = "block"; textV.style.display = "none";
+        frame.src = "about:blank"; // क्लियर प्रीवियस फ्रेम
+
+        if(btn) { 
+            document.querySelectorAll('.step-btn').forEach(b => b.classList.remove('active')); 
+            btn.classList.add('active'); 
+            updateProgress(btn.getAttribute('data-step'));
+        }
+
+        switch(type) {
+            case 'syllabus': title.innerText = "Syllabus Content"; frame.src = fixDriveLink(window.d.syllabusLink); break;
+            case 'video': title.innerText = "Video Lecture"; frame.src = getYouTubeEmbed(window.d.videoURL); break;
+            case 'pdf': title.innerText = "PDF Book"; frame.src = fixDriveLink(window.d.sourcePDF); break;
+            case 'slides': title.innerText = "PPT Slides"; frame.src = "https://docs.google.com/viewer?embedded=true&url=" + encodeURIComponent(window.d.slidesURL); break;
+            case 'summary': title.innerText = "Summary"; frame.style.display = "none"; textV.style.display = "block"; textV.innerHTML = `<div style="padding:10px; white-space:pre-line;">${window.d.summaryText}</div>`; break;
+            case 'mindmap': title.innerText = "Mind Map"; frame.src = fixDriveLink(window.d.mindmapData); break;
+            case 'quiz': title.innerText = "Quiz"; frame.src = window.d.quizData; break;
+            case 'assignment': title.innerText = "Assignment"; frame.src = window.d.assignment; break;
+            case 'certificate': title.innerText = "Certificate"; frame.src = fixDriveLink(window.d.Certificate); break;
+            case 'audio':
+                title.innerText = "Audio Podcast";
+                let aUrl = window.d.audioURL;
+                if(aUrl.includes("drive.google.com")) {
+                    let aid = aUrl.includes("id=") ? aUrl.split("id=")[1].split("&")[0] : aUrl.split("/d/")[1].split("/")[0];
+                    aUrl = `https://docs.google.com/uc?export=download&id=${aid}`;
+                }
+                frame.srcdoc = `<html><body style="display:flex;justify-content:center;align-items:center;height:90vh;font-family:sans-serif;background:#f9f9f9;"><div style="text-align:center;"><i class="fas fa-headphones" style="font-size:3rem;color:#FF6B35;margin-bottom:15px;"></i><br><audio controls autoplay src="${aUrl}"></audio></div><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"></body></html>`;
+                break;
+        }
+    }
+    function logout() { localStorage.clear(); window.location.href = "login.html"; }
 </script>
 </body>
 </html>
