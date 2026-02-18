@@ -154,17 +154,18 @@
 
     <footer><p>© 2026 Shree Shivay Skills | Digital Gurukul Khargone</p></footer>
 </div>
-
 <script>
-    // आपका Web App URL
+    // 1. आपका Google App Script URL
     const scriptURL = 'https://script.google.com/macros/s/AKfycbzrmGKnspyr383f9QzEIKBOknC2s-YreNG18VA7cun0txUnQZOVwGaWHkGPkIvFQzAk/exec';
     
-    // वर्तमान दिनांक और समय सेट करना
+    // 2. आपका n8n Test Webhook URL (जो आपने अभी दिया)
+    const n8nWebhookURL = 'https://birbalpatel.app.n8n.cloud/webhook-test/apply-form';
+
+    // वर्तमान तारीख और समय सेट करना
     document.getElementById('currentDate').value = new Date().toLocaleString();
 
     function goToStep2() {
         const form = document.forms['submit-to-google-sheet'];
-        // Validation check
         if(form.Name.value && form.Email.value && form.Mobile.value && form.Course.value && form.Password.value) {
             document.getElementById('step-1').classList.add('hidden');
             document.getElementById('step-2').classList.remove('hidden');
@@ -180,26 +181,41 @@
     }
 
     const form = document.forms['submit-to-google-sheet'];
-    form.addEventListener('submit', e => {
+    form.addEventListener('submit', async e => {
         e.preventDefault();
         const btn = document.getElementById('submitBtn');
-        btn.innerText = "Processing Admission... Please Wait";
+        btn.innerText = "प्रवेश प्रक्रिया चल रही है... कृपया प्रतीक्षा करें";
         btn.disabled = true;
 
-        fetch(scriptURL, { method: 'POST', body: new FormData(form)})
-        .then(response => response.json())
-        .then(data => {
-            alert('✅ सफलता! आपका आवेदन और भुगतान जानकारी सुरक्षित रूप से सबमिट कर दी गई है।');
+        const formData = new FormData(form);
+        const dataObject = Object.fromEntries(formData.entries());
+
+        try {
+            // गूगल शीट और n8n दोनों को एक साथ डेटा भेजना
+            const googleSheetPromise = fetch(scriptURL, { method: 'POST', body: formData });
+            
+            const n8nPromise = fetch(n8nWebhookURL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(dataObject)
+            });
+
+            // दोनों के रिस्पॉन्स का इंतज़ार करें
+            await Promise.all([googleSheetPromise, n8nPromise]);
+
+            alert('✅ सफलता! आपका आवेदन और भुगतान जानकारी सुरक्षित रूप से सबमिट कर दी गई है। आपको जल्द ही पुष्टि ईमेल प्राप्त होगा।');
             form.reset();
             window.location.href = "index.html"; 
-        })
-        .catch(error => {
+
+        } catch (error) {
             console.error('Error!', error.message);
             alert('❌ त्रुटि! आवेदन भेजने में समस्या आई। कृपया अपना इंटरनेट चेक करें।');
             btn.innerText = "Submit Final Application";
             btn.disabled = false;
-        });
+        }
     });
 </script>
+
 </body>
+
 </html>
